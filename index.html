@@ -1,17 +1,154 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8">
-    <title>我的第一个网页</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <div class="card">
-      <h1>你好,july</h1>
-      <p id="msg">777</p>
-      <button onclick="changeText()">点我揭晓答案</button>
-    
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>智能家居控制面板</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo">
+      <span class="logo-icon">🏠</span>
+      <span class="logo-text">SmartHome</span>
     </div>
-    <script src="script.js"></script>
-  </body>
+    <nav class="nav">
+      <a class="nav-item active" data-page="dashboard">
+        <span class="nav-icon">📊</span> 仪表盘
+      </a>
+      <a class="nav-item" data-page="devices">
+        <span class="nav-icon">💡</span> 设备管理
+      </a>
+      <a class="nav-item" data-page="scenes">
+        <span class="nav-icon">🎬</span> 情景模式
+      </a>
+      <a class="nav-item" data-page="settings">
+        <span class="nav-icon">⚙️</span> 系统设置
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="status-indicator online" id="connectionStatus">
+        <span class="dot"></span> ESP32 已连接
+      </div>
+    </div>
+  </div>
+
+  <main class="main">
+    <!-- 仪表盘页面 -->
+    <section class="page active" id="page-dashboard">
+      <header class="page-header">
+        <h2>仪表盘</h2>
+        <div class="header-time" id="headerTime"></div>
+      </header>
+
+      <div class="sensor-row">
+        <div class="sensor-card">
+          <div class="sensor-icon">🌡️</div>
+          <div class="sensor-info">
+            <span class="sensor-label">室内温度</span>
+            <span class="sensor-value" id="temperature">26.5°C</span>
+          </div>
+        </div>
+        <div class="sensor-card">
+          <div class="sensor-icon">💧</div>
+          <div class="sensor-info">
+            <span class="sensor-label">室内湿度</span>
+            <span class="sensor-value" id="humidity">58%</span>
+          </div>
+        </div>
+        <div class="sensor-card">
+          <div class="sensor-icon">⚡</div>
+          <div class="sensor-info">
+            <span class="sensor-label">今日用电</span>
+            <span class="sensor-value" id="power">3.2 kWh</span>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-title">快捷控制</h3>
+      <div class="device-grid" id="deviceGrid">
+        <!-- JS动态生成 -->
+      </div>
+    </section>
+
+    <!-- 设备管理页面 -->
+    <section class="page" id="page-devices">
+      <header class="page-header">
+        <h2>设备管理</h2>
+        <button class="btn-add" id="btnAddDevice">+ 添加设备</button>
+      </header>
+      <div class="device-table-wrap">
+        <table class="device-table">
+          <thead>
+            <tr><th>设备名称</th><th>房间</th><th>状态</th><th>操作</th></tr>
+          </thead>
+          <tbody id="deviceTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 情景模式页面 -->
+    <section class="page" id="page-scenes">
+      <header class="page-header"><h2>情景模式</h2></header>
+      <div class="scene-grid" id="sceneGrid">
+        <!-- JS动态生成 -->
+      </div>
+    </section>
+
+    <!-- 设置页面 -->
+    <section class="page" id="page-settings">
+      <header class="page-header"><h2>系统设置</h2></header>
+      <div class="settings-group">
+        <h3>ESP32 连接设置</h3>
+        <div class="setting-row">
+          <label>MQTT 服务器地址</label>
+          <input type="text" value="192.168.1.100" id="mqttHost">
+        </div>
+        <div class="setting-row">
+          <label>MQTT 端口</label>
+          <input type="number" value="1883" id="mqttPort">
+        </div>
+        <div class="setting-row">
+          <label>数据刷新间隔 (秒)</label>
+          <input type="number" value="5" id="refreshInterval">
+        </div>
+        <button class="btn-save" id="btnSaveSettings">保存设置</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- 添加设备弹窗 -->
+  <div class="modal-overlay" id="modalAddDevice">
+    <div class="modal">
+      <h3>添加新设备</h3>
+      <div class="form-row">
+        <label>设备名称</label>
+        <input type="text" id="newDeviceName" placeholder="例如：客厅灯">
+      </div>
+      <div class="form-row">
+        <label>所属房间</label>
+        <select id="newDeviceRoom">
+          <option>客厅</option><option>卧室</option><option>厨房</option><option>书房</option><option>卫生间</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>设备类型</label>
+        <select id="newDeviceType">
+          <option value="light">💡 灯光</option>
+          <option value="fan">🌀 风扇</option>
+          <option value="ac">❄️ 空调</option>
+          <option value="lock">🔒 门锁</option>
+          <option value="curtain">🪟 窗帘</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" id="btnCancelAdd">取消</button>
+        <button class="btn-confirm" id="btnConfirmAdd">确认添加</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="function.js"></script>
+  <script src="script.js"></script>
+</body>
 </html>
