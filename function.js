@@ -50,4 +50,31 @@ const deviceStore = {
   activateScene(id) {
     this.scenes.forEach(s => s.active = (s.id === id));
   },
+
+  activityLog: [],
+
+  addLog(action, detail) {
+    this.activityLog.unshift({
+      time: new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+      action,
+      detail,
+    });
+    if (this.activityLog.length > 50) this.activityLog.pop();
+  },
+
+  getRooms() {
+    return [...new Set(this.devices.map(d => d.room))].sort();
+  },
+
+  getStats() {
+    const total = this.devices.length;
+    const active = this.devices.filter(d => d.on).length;
+    const rooms = new Set(this.devices.map(d => d.room)).size;
+    const activeScene = this.scenes.find(s => s.active);
+    return { total, active, rooms, activeScene };
+  },
+
+  setAllDevices(on) {
+    this.devices.forEach(d => d.on = on);
+  },
 };

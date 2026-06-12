@@ -468,6 +468,202 @@ body {
 
 .btn-confirm:hover { box-shadow: 0 0 16px var(--accent); }
 
+/* ===== Stats Row ===== */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: var(--transition);
+}
+
+.stat-card:hover { border-color: var(--accent); }
+
+.stat-value {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.stat-label { font-size: 12px; color: var(--text-dim); }
+
+/* ===== Room Filter Tabs ===== */
+.room-filter-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.room-filter-btn {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-dim);
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: var(--transition);
+}
+
+.room-filter-btn:hover { border-color: var(--accent); color: var(--text); }
+.room-filter-btn.active {
+  background: var(--accent);
+  color: #0f172a;
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+/* ===== Device Toolbar ===== */
+.device-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.toolbar-left {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.toolbar-right { display: flex; gap: 8px; }
+
+.search-input {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 8px 14px;
+  color: var(--text);
+  font-size: 13px;
+  width: 220px;
+  transition: var(--transition);
+}
+
+.search-input:focus { outline: none; border-color: var(--accent); }
+
+.search-input::placeholder { color: var(--text-dim); }
+
+.filter-select {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: var(--text);
+  font-size: 13px;
+  transition: var(--transition);
+}
+
+.filter-select:focus { outline: none; border-color: var(--accent); }
+.filter-select option { background: var(--card-bg); }
+
+.btn-bulk {
+  border: 1px solid var(--card-border);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: var(--transition);
+  background: none;
+}
+
+.btn-bulk.on { color: var(--green); border-color: var(--green); }
+.btn-bulk.on:hover { background: var(--green-glow); }
+
+.btn-bulk.off { color: var(--red); border-color: var(--red); }
+.btn-bulk.off:hover { background: rgba(248,113,113,0.1); }
+
+.empty-cell {
+  text-align: center;
+  padding: 32px 20px !important;
+  color: var(--text-dim);
+  font-size: 14px;
+}
+
+/* ===== Temperature Comfort Indicator ===== */
+.comfort-indicator {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  width: fit-content;
+  margin-top: 2px;
+}
+
+.comfort-indicator.good { color: var(--green); background: var(--green-glow); }
+.comfort-indicator.hot  { color: var(--orange); background: rgba(251,146,60,0.15); }
+.comfort-indicator.cold { color: var(--accent); background: var(--accent-glow); }
+
+/* ===== Activity Log ===== */
+.activity-log {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--card-border);
+}
+
+.activity-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.activity-empty {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-style: italic;
+  padding: 4px 0;
+}
+
+.activity-entry {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  font-size: 11px;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  line-height: 1.4;
+}
+
+.activity-time {
+  color: #64748b;
+  font-variant-numeric: tabular-nums;
+  min-width: 48px;
+}
+
+.activity-action {
+  font-weight: 600;
+  color: var(--accent);
+  min-width: 56px;
+}
+
+.activity-detail {
+  color: var(--text-dim);
+  flex: 1;
+}
+
 /* ===== Scrollbar ===== */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
